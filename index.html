@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trading Expert | Nifty Sensex India VIX Analysis</title>
+  <meta name="description" content="Daily Nifty 50, Sensex & India VIX intraday analysis, buy/sell trade setups for NSE/BSE traders." />
+
+  <!-- Google AdSense - Replace ca-pub-XXXXXXXXXXXXXXXX with your Publisher ID -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg: #0b0e14;
+      --surface: #131820;
+      --border: #1e2530;
+      --green: #00c896;
+      --red: #ff4d6d;
+      --gold: #f5a623;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --accent: #3b82f6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--text); }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* TICKER STRIP */
+    .ticker {
+      background: #0d1117;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 30s linear infinite;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .ticker-inner span { margin: 0 30px; }
+    .up { color: var(--green); }
+    .down { color: var(--red); }
+
+    @keyframes ticker {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* HERO */
+    .hero {
+      padding: 40px 20px 30px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #131820 0%, var(--bg) 100%);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(0,200,150,0.1);
+      border: 1px solid rgba(0,200,150,0.3);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 480px;
+      margin: 0 auto 20px;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* AD ZONE */
+    .ad-zone {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin: 20px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* MAIN LAYOUT */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* MARKET CARDS */
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .market-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .market-card .label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .market-card .value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .market-card .change {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* ANALYSIS POSTS */
+    .posts { margin-bottom: 30px; }
+
+    .post-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .post-card:hover { border-color: var(--accent); }
+
+    .post-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .tag-nifty { background: rgba(59,130,246,0.15); color: var(--accent); }
+    .tag-sensex { background: rgba(245,166,35,0.15); color: var(--gold); }
+    .tag-vix { background: rgba(255,77,109,0.15); color: var(--red); }
+    .tag-call { background: rgba(0,200,150,0.15); color: var(--green); }
+
+    .post-card h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .post-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* TRADE SETUP BOX */
+    .trade-setup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 30px;
+    }
+
+    .trade-setup h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .trade-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .trade-table td {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .trade-table td:first-child { color: var(--muted); width: 40%; }
+    .trade-table td:last-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+
+    .trade-table tr:last-child td { border-bottom: none; }
+
+    /* DISCLAIMER */
+    .disclaimer {
+      background: rgba(255,77,109,0.05);
+      border: 1px solid rgba(255,77,109,0.2);
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .disclaimer strong { color: var(--red); }
+
+    /* FOOTER */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 30px 20px 20px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); text-decoration: none; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* PAGE SECTIONS (Privacy, Terms, Contact) */
+    .page-content {
+      display: none;
+      padding: 30px 20px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .page-content.active { display: block; }
+
+    .page-content h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .page-content .updated {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .page-content h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--green);
+      margin: 20px 0 8px;
+    }
+
+    .page-content p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 24px;
+      cursor: pointer;
+    }
+
+    .back-btn:hover { border-color: var(--accent); text-decoration: none; }
+
+    #home-section { display: block; }
+
+    @media (max-width: 600px) {
+      .market-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 22px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="showSection('home')">▲ <span>Trading Expert</span></div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('home')">Home</a></li>
+    <li><a href="#" onclick="showSection('privacy')">Privacy</a></li>
+    <li><a href="#" onclick="showSection('terms')">Terms</a></li>
+    <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>NIFTY 50 <span class="up">▲ 24,380.50 +0.42%</span></span>
+    <span>SENSEX <span class="up">▲ 80,220.30 +0.38%</span></span>
+    <span>INDIA VIX <span class="down">▼ 13.45 -2.10%</span></span>
+    <span>BANK NIFTY <span class="up">▲ 52,140.00 +0.55%</span></span>
+    <span>MIDCAP 100 <span class="up">▲ 56,800.00 +0.28%</span></span>
+    <span>NIFTY IT <span class="down">▼ 38,200.00 -0.15%</span></span>
+    <span>NIFTY 50 <span class="up">▲ 24,380.50 +0.42%</span></span>
+    <span>SENSEX <span class="up">▲ 80,220.30 +0.38%</span></span>
+    <span>INDIA VIX <span class="down">▼ 13.45 -2.10%</span></span>
+  </div>
+</div>
+
+<!-- ========== HOME ========== -->
+<div id="home-section">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">NSE · BSE · India VIX</div>
+    <h1>Smart Calls for <em>Indian Markets</em></h1>
+    <p>Daily Nifty 50, Sensex & India VIX analysis with intraday trade setups for active NSE/BSE traders.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-val">Nifty</div>
+        <div class="stat-label">50 Analysis</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">VIX</div>
+        <div class="stat-label">Daily Insight</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">Buy/Short</div>
+        <div class="stat-label">Trade Setups</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AD ZONE TOP -->
+  <div class="ad-zone">
+    <!-- AdSense Ad Unit Here -->
+    📊 Advertisement
+  </div>
+
+  <div class="container">
+
+    <!-- MARKET OVERVIEW -->
+    <div class="section-title">Market Overview</div>
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="label">Nifty 50</div>
+        <div class="value up">24,380</div>
+        <div class="change up">▲ +102 (+0.42%)</div>
+      </div>
+      <div class="market-card">
+        <div class="label">Sensex</div>
+        <div class="value up">80,220</div>
+        <div class="change up">▲ +305 (+0.38%)</div>
+      </div>
+      <div class="market-card">
+        <div class="label">India VIX</div>
+        <div class="value down">13.45</div>
+        <div class="change down">▼ -0.29 (-2.10%)</div>
+      </div>
+    </div>
+
+    <!-- TODAY'S TRADE SETUP -->
+    <div class="section-title">Today's Trade Setup</div>
+    <div class="trade-setup">
+      <h3>// INTRADAY SETUP — NIFTY 50</h3>
+      <table class="trade-table">
+        <tr><td>Bias</td><td class="up">BULLISH</td></tr>
+        <tr><td>Buy Above</td><td>24,350</td></tr>
+        <tr><td>Target 1</td><td class="up">24,450</td></tr>
+        <tr><td>Target 2</td><td class="up">24,550</td></tr>
+        <tr><td>Stop Loss</td><td class="down">24,280</td></tr>
+        <tr><td>VIX Level</td><td>13.45 — Low Volatility</td></tr>
+      </table>
+    </div>
+
+    <!-- AD ZONE MID -->
+    <div class="ad-zone">
+      <!-- AdSense Ad Unit Here -->
+      📊 Advertisement
+    </div>
+
+    <!-- ANALYSIS POSTS -->
+    <div class="section-title">Latest Analysis</div>
+    <div class="posts">
+
+      <div class="post-card">
+        <span class="post-tag tag-nifty">Nifty 50</span>
+        <h2>Nifty Eyes 24,500 — Key Resistance Levels to Watch</h2>
+        <p>Bulls maintained control as Nifty held above 24,300. India VIX cooling below 14 supports a bullish bias for the session. Key support at 24,200, resistance at 24,500.</p>
+        <div class="post-meta">
+          <span>📅 June 12, 2026</span>
+          <span>⏱ 3 min read</span>
+          <span class="up">● Bullish</span>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <span class="post-tag tag-vix">India VIX</span>
+        <h2>India VIX at 13.45 — What It Means for Traders Today</h2>
+        <p>VIX declining means lower expected volatility. This favors option sellers and positional traders. Nifty option writing at 24,000 PE looks attractive at current VIX levels.</p>
+        <div class="post-meta">
+          <span>📅 June 12, 2026</span>
+          <span>⏱ 2 min read</span>
+          <span style="color:var(--gold)">● Neutral-Bullish</span>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <span class="post-tag tag-sensex">Sensex</span>
+        <h2>Sensex Crosses 80,000 — Momentum or Resistance?</h2>
+        <p>Sensex crossing 80,000 is a key psychological level. FII buying continues to support markets. Watch for any reversal signs near 80,500 which is the next major resistance.</p>
+        <div class="post-meta">
+          <span>📅 June 11, 2026</span>
+          <span>⏱ 3 min read</span>
+          <span class="up">● Bullish</span>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <span class="post-tag tag-call">Trade Call</span>
+        <h2>Bank Nifty Intraday — Buy Setup Near 52,000</h2>
+        <p>Bank Nifty showing strength. Buy above 52,100 with target 52,400 and stop loss at 51,900. Risk-reward of 1:1.5 makes this a viable intraday trade for active traders.</p>
+        <div class="post-meta">
+          <span>📅 June 11, 2026</span>
+          <span>⏱ 2 min read</span>
+          <span class="up">● Buy</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AD ZONE BOTTOM -->
+    <div class="ad-zone">
+      <!-- AdSense Ad Unit Here -->
+      📊 Advertisement
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+      <strong>⚠️ Disclaimer:</strong> All content on Trading Expert is for educational and informational purposes only. Nothing here constitutes financial advice or SEBI-registered research. Stock markets are subject to market risks. Please consult a SEBI-registered investment advisor before making any trading or investment decisions. Trade at your own risk.
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== PRIVACY POLICY ========== -->
+<div id="privacy-section" class="page-content">
+  <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+  <h1>Privacy Policy</h1>
+  <div class="updated">Last updated: June 12, 2026</div>
+
+  <p>Welcome to Trading Expert (tradingniftysensexindiavix). This Privacy Policy explains how we collect, use, and protect your information.</p>
+
+  <h2>1. Information We Collect</h2>
+  <p>We may collect log data (IP address, browser type, pages visited), cookies and usage data via third-party services, and information you voluntarily provide.</p>
+
+  <h2>2. Cookies</h2>
+  <p>This site uses cookies to improve user experience. Third-party ad networks including Google AdSense may use cookies to serve relevant ads based on your prior visits.</p>
+
+  <h2>3. Google AdSense</h2>
+  <p>We use Google AdSense to display advertisements. Google may use the DoubleClick cookie to serve ads based on your interests. You can opt out at: <a href="https://www.google.com/settings/ads" target="_blank">google.com/settings/ads</a></p>
+
+  <h2>4. Third-Party Links</h2>
+  <p>Our site may contain links to external websites. We are not responsible for the privacy practices of those sites.</p>
+
+  <h2>5. Data Security</h2>
+  <p>We take reasonable measures to protect your information. No method of transmission over the internet is 100% secure.</p>
+
+  <h2>6. Children's Privacy</h2>
+  <p>This blog is not directed at children under 13. We do not knowingly collect personal data from minors.</p>
+
+  <h2>7. Contact</h2>
+  <p>Questions? Email us at: <a href="mailto:kumarpk12888@gmail.com">kumarpk12888@gmail.com</a></p>
+</div>
+
+<!-- ========== TERMS ========== -->
+<div id="terms-section" class="page-content">
+  <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+  <h1>Terms & Conditions</h1>
+  <div class="updated">Last updated: June 12, 2026</div>
+
+  <p>By accessing Trading Expert (tradingniftysensexindiavix), you agree to these Terms and Conditions.</p>
+
+  <h2>1. Educational Purpose Only</h2>
+  <p>All content — including Nifty/Sensex analysis, India VIX data, intraday trade setups — is strictly for educational and informational purposes only. Nothing constitutes financial advice or SEBI-registered research.</p>
+
+  <h2>2. No Liability</h2>
+  <p>Trading Expert is not responsible for any financial loss arising from use of information on this site. Stock markets are subject to market risks. Trade at your own risk.</p>
+
+  <h2>3. Intellectual Property</h2>
+  <p>All content on this site is original work of Trading Expert. You may not copy or redistribute any content without prior written permission.</p>
+
+  <h2>4. Third-Party Advertisements</h2>
+  <p>This site displays ads via Google AdSense. We are not responsible for the content of third-party ads.</p>
+
+  <h2>5. Governing Law</h2>
+  <p>These Terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of Indian courts.</p>
+
+  <h2>6. Contact</h2>
+  <p>For queries: <a href="mailto:kumarpk12888@gmail.com">kumarpk12888@gmail.com</a></p>
+</div>
+
+<!-- ========== CONTACT ========== -->
+<div id="contact-section" class="page-content">
+  <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+  <h1>Contact Us</h1>
+  <div class="updated">Trading Expert | tradingniftysensexindiavix</div>
+
+  <p>Have a question, suggestion, or feedback about our trading analysis, Nifty/Sensex calls, or India VIX insights?</p>
+
+  <h2>📧 Email</h2>
+  <p><a href="mailto:kumarpk12888@gmail.com">kumarpk12888@gmail.com</a></p>
+  <p>We typically respond within 24–48 hours.</p>
+
+  <h2>About This Blog</h2>
+  <p>Trading Expert is an independent blog focused on Nifty 50 & Sensex intraday analysis, India VIX interpretation, buy/short sell trade setups for NSE/BSE, and market trends.</p>
+
+  <h2>⚠️ Disclaimer</h2>
+  <p>All content is for educational purposes only. Nothing here constitutes financial advice. Please consult a SEBI-registered advisor before making investment decisions.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#" onclick="showSection('privacy')">Privacy Policy</a>
+    <a href="#" onclick="showSection('terms')">Terms & Conditions</a>
+    <a href="#" onclick="showSection('contact')">Contact Us</a>
+  </div>
+  <div class="footer-copy">
+    © 2026 Trading Expert | tradingniftysensexindiavix. All Rights Reserved.<br>
+    <span style="font-size:11px;">Educational content only. Not financial advice.</span>
+  </div>
+</footer>
+
+<script>
+  function showSection(name) {
+    document.getElementById('home-section').style.display = 'none';
+    document.getElementById('privacy-section').classList.remove('active');
+    document.getElementById('terms-section').classList.remove('active');
+    document.getElementById('contact-section').classList.remove('active');
+
+    if (name === 'home') {
+      document.getElementById('home-section').style.display = 'block';
+    } else {
+      document.getElementById(name + '-section').classList.add('active');
+    }
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
