@@ -437,16 +437,26 @@
 
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-inner">
-    <span>NIFTY 50 <span class="up">▲ 24,380.50 +0.42%</span></span>
-    <span>SENSEX <span class="up">▲ 80,220.30 +0.38%</span></span>
-    <span>INDIA VIX <span class="down">▼ 13.45 -2.10%</span></span>
-    <span>BANK NIFTY <span class="up">▲ 52,140.00 +0.55%</span></span>
-    <span>MIDCAP 100 <span class="up">▲ 56,800.00 +0.28%</span></span>
-    <span>NIFTY IT <span class="down">▼ 38,200.00 -0.15%</span></span>
-    <span>NIFTY 50 <span class="up">▲ 24,380.50 +0.42%</span></span>
-    <span>SENSEX <span class="up">▲ 80,220.30 +0.38%</span></span>
-    <span>INDIA VIX <span class="down">▼ 13.45 -2.10%</span></span>
+  <!-- TradingView Ticker Tape Widget -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+      "symbols": [
+        {"proName": "NSE:NIFTY","title": "Nifty 50"},
+        {"proName": "BSE:SENSEX","title": "Sensex"},
+        {"proName": "NSE:INDIAVIX","title": "India VIX"},
+        {"proName": "NSE:BANKNIFTY","title": "Bank Nifty"},
+        {"proName": "NSE:CNXMIDCAP","title": "Midcap 100"},
+        {"proName": "NSE:CNXIT","title": "Nifty IT"}
+      ],
+      "showSymbolLogo": false,
+      "colorTheme": "dark",
+      "isTransparent": true,
+      "displayMode": "adaptive",
+      "locale": "en"
+    }
+    </script>
   </div>
 </div>
 
@@ -482,24 +492,54 @@
 
   <div class="container">
 
-    <!-- MARKET OVERVIEW -->
+    <!-- MARKET OVERVIEW - TradingView Real Data -->
     <div class="section-title">Market Overview</div>
-    <div class="market-grid">
-      <div class="market-card">
-        <div class="label">Nifty 50</div>
-        <div class="value up">24,380</div>
-        <div class="change up">▲ +102 (+0.42%)</div>
-      </div>
-      <div class="market-card">
-        <div class="label">Sensex</div>
-        <div class="value up">80,220</div>
-        <div class="change up">▲ +305 (+0.38%)</div>
-      </div>
-      <div class="market-card">
-        <div class="label">India VIX</div>
-        <div class="value down">13.45</div>
-        <div class="change down">▼ -0.29 (-2.10%)</div>
-      </div>
+
+    <!-- TradingView Market Quotes Widget -->
+    <div class="tradingview-widget-container" style="margin-bottom:20px;">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+      {
+        "title": "Indian Markets",
+        "symbols": [
+          [{"name": "NSE:NIFTY", "displayName": "Nifty 50"}],
+          [{"name": "BSE:SENSEX", "displayName": "Sensex"}],
+          [{"name": "NSE:INDIAVIX", "displayName": "India VIX"}],
+          [{"name": "NSE:BANKNIFTY", "displayName": "Bank Nifty"}]
+        ],
+        "colorTheme": "dark",
+        "isTransparent": true,
+        "locale": "en",
+        "width": "100%",
+        "height": "250"
+      }
+      </script>
+    </div>
+
+    <!-- TradingView Nifty Chart -->
+    <div class="section-title">Nifty 50 Live Chart</div>
+    <div class="tradingview-widget-container" style="margin-bottom:24px;">
+      <div id="tradingview_nifty"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+      <script type="text/javascript">
+      new TradingView.widget({
+        "width": "100%",
+        "height": 400,
+        "symbol": "NSE:NIFTY",
+        "interval": "15",
+        "timezone": "Asia/Kolkata",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "toolbar_bg": "#131820",
+        "enable_publishing": false,
+        "hide_top_toolbar": false,
+        "hide_legend": false,
+        "save_image": false,
+        "container_id": "tradingview_nifty",
+        "backgroundColor": "#0b0e14"
+      });
+      </script>
     </div>
 
     <!-- TODAY'S TRADE SETUP -->
